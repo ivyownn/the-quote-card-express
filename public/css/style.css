@@ -15,7 +15,7 @@ html {
   background-image: url("../img/mockup.jpg");
   background-size: cover;
   background-position: center;
-  width: 100%;
+  width: 100vw; /* Use 100vw instead of 100% for full viewport width */
   height: 100vh;
   position: absolute;
   top: 0;
@@ -51,10 +51,4 @@ html {
 
 @media (max-width: 768px) {
   .quote-text {
-    font-size: 1.2rem;
-  }
-
-  .author-text {
-    font-size: 1rem;
-  }
-}
+    font-size: 

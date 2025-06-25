@@ -1,25 +1,30 @@
-("use strict");
+"use strict";
 
 const elements = {
   quote: document.getElementById("quote"),
   author: document.getElementById("author"),
 };
 
-async function getRandomImage() {
+async function updateBackgroundImage() {
   try {
     const response = await fetch("/api/photo");
     const data = await response.json();
-    const receivedPhotoUrl = data.url;
 
-    const imgDiv = document.querySelector(".background-img");
-    imgDiv.style.backgroundImage = `url("${receivedPhotoUrl}")`;
+    if (data.url) {
+      const imgDiv = document.querySelector(".background-img");
+      imgDiv.style.backgroundImage = `url("${data.url}")`;
+    } else {
+      console.error("No URL in response:", data);
+    }
   } catch (error) {
-    console.error(error);
+    console.error("Failed to fetch background image:", error);
   }
 }
 
-getRandomImage();
+// Call the function when the page loads
+window.addEventListener("DOMContentLoaded", updateBackgroundImage);
 
+// Your quote loop code (commented out for now)
 // const quotes = [
 //   {
 //     quote: "All hands! Abandon ship!",
@@ -49,4 +54,4 @@ getRandomImage();
 //   }, 3000);
 // }
 
-// setTimeout(loopThroughQuotes, 3000);
+// setTimeout(loopT
