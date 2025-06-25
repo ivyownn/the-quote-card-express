@@ -5,53 +5,52 @@ const elements = {
   author: document.getElementById("author"),
 };
 
-async function updateBackgroundImage() {
+async function getRandomImage() {
+  const endpoint = "http://localhost:8080/api/v1/getRandomImage";
   try {
-    const response = await fetch("/api/photo");
-    const data = await response.json();
+    const response = await fetch(endpoint);
+    const returnedData = await response.json();
+    const receivedPhotoUrl = returnedData.data;
 
-    if (data.url) {
-      const imgDiv = document.querySelector(".background-img");
-      imgDiv.style.backgroundImage = `url("${data.url}")`;
-    } else {
-      console.error("No URL in response:", data);
-    }
+    const imgDiv = document.querySelector(".background-img");
+    imgDiv.style.backgroundImage = `url(${receivedPhotoUrl})`;
   } catch (error) {
-    console.error("Failed to fetch background image:", error);
+    console.error("Error fetching image:", error);
   }
 }
 
 // Call the function when the page loads
-window.addEventListener("DOMContentLoaded", updateBackgroundImage);
+window.addEventListener("DOMContentLoaded", getRandomImage);
 
-// Your quote loop code (commented out for now)
-// const quotes = [
-//   {
-//     quote: "All hands! Abandon ship!",
-//     author: "Captain Picard",
-//   },
-//   {
-//     quote: "Doh!",
-//     author: "Homer Simpson",
-//   },
-//   {
-//     quote:
-//       "The Internet is the first thing that humanity has built that humanity doesn't understand...",
-//     author: "Eric Schmidt",
-//   },
-// ];
+// Optional: Quote loop code (currently commented out)
+/*
+const quotes = [
+  {
+    quote: "All hands! Abandon ship!",
+    author: "Captain Picard",
+  },
+  {
+    quote: "Doh!",
+    author: "Homer Simpson",
+  },
+  {
+    quote: "The Internet is the first thing that humanity has built that humanity doesn't understand...",
+    author: "Eric Schmidt",
+  },
+];
 
-// function loopThroughQuotes() {
-//   let quoteIndex = 0;
-//   setInterval(() => {
-//     if (quoteIndex < quotes.length) {
-//       elements.quote.textContent = quotes[quoteIndex].quote;
-//       elements.author.textContent = quotes[quoteIndex].author;
-//       quoteIndex++;
-//     } else {
-//       quoteIndex = 0;
-//     }
-//   }, 3000);
-// }
+function loopThroughQuotes() {
+  let quoteIndex = 0;
+  setInterval(() => {
+    if (quoteIndex < quotes.length) {
+      elements.quote.textContent = quotes[quoteIndex].quote;
+      elements.author.textContent = quotes[quoteIndex].author;
+      quoteIndex++;
+    } else {
+      quoteIndex = 0;
+    }
+  }, 3000);
+}
 
-// setTimeout(loopT
+setTimeout(loopThroughQuotes, 3000);
+*/
