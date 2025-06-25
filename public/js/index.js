@@ -1,5 +1,3 @@
-console.log("Loaded!");
-
 ("use strict");
 
 const elements = {

@@ -1,15 +1,14 @@
 {
   "name": "the-quote-card-express",
   "version": "1.0.0",
+  "description": "Quote card using Express and Unsplash API",
   "main": "server.js",
   "scripts": {
-    "dev": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "aivee",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "express": "^5.1.0"
   },
