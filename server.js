@@ -1,5 +1,5 @@
 require("dotenv").config();
-console.log("Using CLIENT_ID:", process.env.CLIENT_ID); // Debug: Should print your key
+console.log("Using CLIENT_ID:", process.env.CLIENT_ID);
 
 const cors = require("cors");
 const express = require("express");
@@ -15,7 +15,14 @@ const corsOptions = {
   origin: `http://localhost:${port}`,
 };
 app.use(cors(corsOptions));
+
+// Serve static assets
 app.use(express.static("public"));
+
+// Serve main page explicitly
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 async function getRandomImage() {
   const endpoint = `https://api.unsplash.com/photos/random/?client_id=${process.env.CLIENT_ID}`;
@@ -23,7 +30,7 @@ async function getRandomImage() {
     const response = await fetch(endpoint);
     const data = await response.json();
 
-    console.log("Unsplash response data:", data); // Optional for debug
+    console.log("Unsplash response data:", data);
 
     if (!data.urls || !data.urls.regular) {
       throw new Error("No photo URL found in Unsplash response");
@@ -36,7 +43,21 @@ async function getRandomImage() {
   }
 }
 
-// Assignment route
-app.use("/api/v1/getRandomImage", async (request, response) => {
+app.get("/api/v1/getRandomImage", async (req, res) => {
   const photoUrl = await getRandomImage();
-  if (p
+  if (photoUrl) {
+    res.status(200).json({
+      status: 200,
+      data: photoUrl,
+    });
+  } else {
+    res.status(500).json({
+      status: 500,
+      error: "Failed to fetch image from Unsplash",
+    });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
